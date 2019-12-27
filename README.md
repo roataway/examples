@@ -12,6 +12,7 @@ acolo vei găsi un readme cu instrucțiuni specifice, dacă e necesar.
 
 - `javascript-websocket` - o pagină HTML cu JavaScript, care se conectează la server prin
 MQTT over websockets, și afișează mesajele telemetrice.
+- `python` - conexiune prin MQTT over TCP, cu afișarea pe ecran a mesajelor recepționate.
 
 
 
