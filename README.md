@@ -30,6 +30,6 @@ publicul țintă e alcătuit din începători
 sute de angajați, dar care prind nu_bine când codul îl citește un puști care abia învată
 programarea
 8. Include în readme o secțiune cu referințe la materiale adiționale (screencasts, articole,
-cărți, etc.), ca începătorii să-ți poată dezvolta deprinderi bune
+cărți, etc.), ca începătorii să-și poată dezvolta deprinderi bune
 
 Când e gata, deschide un pull-request (PR).
