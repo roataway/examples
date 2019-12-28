@@ -14,8 +14,7 @@
 Pentru gestionarea lor noi folosim managerul Cocoa Pods. Din fericire el face multe lucruri automat și totul ce se cere de la noi e să scriem comanda în consolă `$pod install`:
 ![pod install](media/pod-install.png)
 
-2. Deschidem proiectul de tip xcworkspace din consolă `$open ios-swift-moscapsule.xworkspace`, sau cu dublu clic din interfața grafică:
-![workspace](media/workspace.png)
+2. Deschidem proiectul de tip xcworkspace din consolă `$open ios-swift-moscapsule.xworkspace`, sau cu dublu clic din interfața grafică.
 
 3. Compilăm și lansăm proiectul în simulator (dacă nu despunem de dispozitiv cu iOS) CMD+R. Și vedem în Debug Area, care se află jos, pe panelul Console mesajele de la MQTT broker la topic-ul transport:
 ![messages](media/messages.png)
