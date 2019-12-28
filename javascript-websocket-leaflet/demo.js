@@ -51,7 +51,18 @@ function onMessageArrived(message) {
     // decode the JSON payload and render the marker, see renderMarker
     // embedded in the HTML itself
     let payload = JSON.parse(message.payloadString)
-    renderMarker(payload.latitude, payload.longitude, payload.board)
+
+    // for topics such as `telemetry/route/+`, there is a `board` attribute in the JSON,
+    // whereas for topics such as `telemetry/transport/chiK8n/1/1/+` the JSON does not
+    // contain it, so we extract it from the topic itself (in this case it will be the)
+    // identifier of the tracker itself
+    var boardId = null
+    if (payload.hasOwnProperty('board')) {
+        boardId = payload.board
+    } else {
+        boardId = message.destinationName.split('/').pop()
+    }
+    renderMarker(payload.latitude, payload.longitude, boardId)
 }
 
 // Called when the disconnection button is pressed

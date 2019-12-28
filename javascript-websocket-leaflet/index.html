@@ -21,13 +21,13 @@
       <b>Port:</b>
       <input id="port" type="text" name="port" value="1946"><br>
       <b>Topic:</b>
-      <input id="topic" type="text" name="topic" value="telemetry/route/+"><br><br>
+      <input id="topic" type="text" name="topic" value="telemetry/route/+"> (try <em>telemetry/transport/chiK8n/1/1/+ to "snap" markers to roads (route matching)</em>)<br><br>
       <input type="button" onclick="startConnect()" value="Connect">
       <input type="button" onclick="startDisconnect()" value="Disconnect">
    </form>
 </div>
 
-<div id="mapid" style="width: 800px; height: 400px;"></div>
+<div id="mapid" style="width: 1000px; height: 800px;"></div>
 <div id="messages"></div>
 <script>
    // Global map, where the key=boardId and the value is the corresponding marker object.
