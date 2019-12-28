@@ -1,8 +1,8 @@
 # Exemplu de conexiune la MQTT broker cu Swift, pe platforma iOS, cu ajutorul MQTT client-ului Moscapsule
 
-0. Din păcate la moment, și puțin probabil situașia să se schimbe, dezvoltarea aplicațiilor pentru platformele Apple este posibilă doar de pe macos cu xcode. În caz că nu vreți să cumpărați mac este opțiunea cu [hackintosh](https://www.tonymacx86.com/buyersguide/building-a-customac-hackintosh-the-ultimate-buyers-guide/).
+0. Din păcate, la moment, și puțin probabil situația să se schimbe, dezvoltarea aplicațiilor pentru platformele Apple este posibilă doar de pe macOD cu xCode. În caz că nu vreți să cumpărați mac este opțiunea cu [hackintosh](https://www.tonymacx86.com/buyersguide/building-a-customac-hackintosh-the-ultimate-buyers-guide/).
 
-1. Pentru bun început avem nevoie să instalăm dependețele. În cazul nostru sunt 2: Moscapsule, librăria mqtt pentru iOS; și librăria OpenSSL care e o dependență pentru Moscapsule și permite lucrul cu servere protejate prin criptare. 
+1. Pentru bun început avem nevoie să instalăm dependețele. În cazul nostru sunt două: Moscapsule, librăria MQTT pentru iOS; și librăria OpenSSL care e o dependență a Moscapsule și permite lucrul cu servere protejate prin criptare. 
 ```
 ...
   use_frameworks!
@@ -16,10 +16,10 @@ Pentru gestionarea lor noi folosim managerul Cocoa Pods. Din fericire el face mu
 
 2. Deschidem proiectul de tip xcworkspace din consolă `$open ios-swift-moscapsule.xworkspace`, sau cu dublu clic din interfața grafică.
 
-3. Compilăm și lansăm proiectul în simulator (dacă nu despunem de dispozitiv cu iOS) CMD+R. Și vedem în Debug Area, care se află jos, pe panelul Console mesajele de la MQTT broker la topic-ul transport:
+3. Compilăm și lansăm proiectul în simulator (dacă nu dispunem de dispozitiv cu iOS) CMD+R. Și vedem în Debug Area, care se află jos, pe panelul Console mesajele de la MQTT broker la topic-ul transport:
 ![messages](media/messages.png)
 
 # Informații utile
-- [Moscapsule, iOS mqtt library](https://github.com/flightonary/Moscapsule)
+- [Moscapsule, iOS MQTT library](https://github.com/flightonary/Moscapsule)
 - [tonymacx86, how to build a hackintosh](https://www.tonymacx86.com/buyersguide/building-a-customac-hackintosh-the-ultimate-buyers-guide/)
 - [Managerul de dependențe Cocoa Pods](https://cocoapods.org/)
