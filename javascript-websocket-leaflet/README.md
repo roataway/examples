@@ -4,5 +4,6 @@
 
 
 Referințe:
+- https://leafletjs.com/examples/quick-start/
 - https://www.thomaslaurenson.com/blog/2018/07/10/mqtt-web-application-using-javascript-and-websockets/
 - https://www.eclipse.org/paho/clients/js/
