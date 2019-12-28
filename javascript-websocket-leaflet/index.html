@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Roataway map rendering demo</title>
+
+   <meta charset="utf-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js" type="text/javascript"></script>
+      <script src="demo.js" type="text/javascript"></script> 
+</head>
+<body>
+
+<div class="wrapper">
+   <h1>Chișinău public transport telemetry map demo</h1>
+   <form id="connection-information-form">
+      <b>Hostname:</b> 
+      <input id="host" type="text" name="host" value="opendata.dekart.com"><br>
+      <b>Port:</b>
+      <input id="port" type="text" name="port" value="1946"><br>
+      <b>Topic:</b>
+      <input id="topic" type="text" name="topic" value="telemetry/route/+"><br><br>
+      <input type="button" onclick="startConnect()" value="Connect">
+      <input type="button" onclick="startDisconnect()" value="Disconnect">
+   </form>
+</div>
+
+<div id="mapid" style="width: 800px; height: 400px;"></div>
+<script>
+   // Global map, where the key=boardId and the value is the corresponding marker object.
+   // It is used for keeping track of all vehicles shown on the map, such that their
+   // locations can be updated when new telemetry is available.
+   var markers = new Map()
+
+   // Set the map to the center of Chisinau by default
+   var mymap = L.map('mapid').setView([47.023659, 28.828983], 13);
+
+   L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+      maxZoom: 18,
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+         '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+      id: 'mapbox/streets-v11'
+   }).addTo(mymap);
+
+   var popup = L.popup();
+
+   function onMapClick(e) {
+      popup
+         .setLatLng(e.latlng)
+         .setContent("You clicked the map at " + e.latlng.toString())
+         .openOn(mymap);
+   }
+
+   mymap.on('click', onMapClick);
+
+
+   /* This function is invoked when a marker is rendered. It will either create
+      a new marker, and store it in the `markers` map, or update the location of
+      an existing marker
+   */
+   function renderMarker(lat, lon, boardId) {
+      if (markers.has(boardId)) {
+         // it is a known vehicle, we just move its location to the new one
+         // console.log(`Updating marker for board ${boardId}`)
+         var marker = markers.get(boardId)
+         marker.setLatLng([lat, lon]).update()
+      }
+      else {
+         // we've never seen it before, create it and add it to the map
+         console.log(`Creating marker for board ${boardId}`)
+         var newMarker = L.marker([lat, lon]).addTo(mymap)
+                          .bindPopup(`Board <b>${boardId}</b>`)
+         markers.set(boardId, newMarker)
+      }
+   }
+
+</script>
+</body>
+</html>
