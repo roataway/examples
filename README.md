@@ -14,6 +14,8 @@ acolo vei găsi un readme cu instrucțiuni specifice, dacă e necesar.
 MQTT over websockets, și afișează mesajele telemetrice.
 - `javascript-websocket-leaflet` - o versiune mai elaborată a exemplului precedent, care
 vizualizează vehiculele pe hartă.
+- `javascript-websocket-smoothie` - construcția unui grafic care arată variația în timp
+real a direcției de deplasare a unui vehicul.
 - `python` - conexiune prin MQTT over TCP, cu afișarea pe ecran a mesajelor recepționate.
 - `ios-swift-moscapsule` - exemplu simplu pe iOS cu utilizarea limbajului Swift și librăriei Moscapsule. 
 - `ruby` - analog a exemplului Python

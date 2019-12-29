@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <title>Roataway live public transport telemetry</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js" type="text/javascript"></script>
+      <script type="text/javascript" src="smoothie.js"></script>
+      <script src="demo.js" type="text/javascript"></script>
+      <style>
+         div.smoothie-chart-tooltip {
+           background: #444;
+           padding: 1em;
+           margin-top: 20px;
+           font-family: consolas;
+           color: white;
+           font-size: 10px;
+           pointer-events: none;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="wrapper">
+         <h3>Roataway live telemetry plot</h3>
+         <form id="connection-information-form">
+            <b>Hostname:</b> 
+            <input id="host" type="text" name="host" value="opendata.dekart.com"> <b>Port:</b><input id="port" type="text" name="port" value="1946"><br>
+            <b>Topic:</b>
+            <input id="topic" type="text" name="topic" value="telemetry/transport/<tracker id>"> (try <em>telemetry/transport/0000097</em> or any other specific <a href="https://github.com/roataway/infrastructure-data/blob/master/vehicles.csv">tracker from the list<a>)<br><br>
+            <input type="button" onclick="startConnect()" value="Connect">
+            <input type="button" onclick="startDisconnect()" value="Disconnect">
+         </form>
+         <canvas id="mycanvas" style="width:100%; height:300px"></canvas>
+         This image visualizes the direction of movement (<a href="https://en.wikipedia.org/wiki/Azimuth">azimuth</a>) of a particular vehicle.
+
+         <div id="messages"></div>
+      </div>
+      <script>
+         // This part is responsible for rendering the `direction` parameter in real-time,
+         // in a scrolling window. For a list of settings, see http://smoothiecharts.org/builder/
+         var smoothie = new SmoothieChart({
+            responsive: true,
+            millisPerPixel:220,
+            tooltip:true,
+            interpolation:'step',
+            grid:{verticalSections:10, millisPerLine:10000},
+            timestampFormatter: SmoothieChart.timeFormatter,
+            maxValue: 360,
+            minValue: 0,
+         })
+
+         smoothie.streamTo(document.getElementById("mycanvas"))
+
+         // This is a time-series object to which we'll be appending our new telemetry,
+         // as it arrives (see the `onMessageArrived` logic in demo.js)
+         var directionLog = new TimeSeries();
+
+         // here we bind the time series to the chart object; from now on we just have to
+         // add new entries to the time-series and everything else will be updated on-the-fly
+         smoothie.addTimeSeries(directionLog, {lineWidth:2,strokeStyle:'#00ff00'})
+      </script>
+   </body>
+</html>
