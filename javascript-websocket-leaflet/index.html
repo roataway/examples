@@ -17,9 +17,7 @@
    <h1>Chișinău public transport telemetry map demo</h1>
    <form id="connection-information-form">
       <b>Hostname:</b> 
-      <input id="host" type="text" name="host" value="opendata.dekart.com"><br>
-      <b>Port:</b>
-      <input id="port" type="text" name="port" value="1946"><br>
+      <input id="host" type="text" name="host" value="opendata.dekart.com"> <b>Port:</b><input id="port" type="text" name="port" value="1946"><br>
       <b>Topic:</b>
       <input id="topic" type="text" name="topic" value="telemetry/route/+"> (try <em>telemetry/transport/chiK8n/1/1/+</em> to "snap" markers to roads (route matching))<br><br>
       <input type="button" onclick="startConnect()" value="Connect">
@@ -35,8 +33,33 @@
    // locations can be updated when new telemetry is available.
    var markers = new Map()
 
+   //////////////////////////////////////////////////////////////////////////////////
+   // define vehicle markers to be used at different zoom levels. Note how the anchor
+   // point is set to be in the center of the figure
+   var vehicleHighLevel = new L.Icon({
+        iconUrl: 'vehicle-marker-blue-filled.svg',
+        iconSize: [5, 5],
+        iconAnchor: [2, 2],
+        popupAnchor: [1, 1],
+    })
+
+   var vehicleMedLevel = new L.Icon({
+        iconUrl: 'vehicle-marker-blue.svg',
+        iconSize: [10, 10],
+        iconAnchor: [5, 5],
+        popupAnchor: [1, 1],
+    })
+
+   var vehicleLowLevel = new L.Icon({
+        iconUrl: 'vehicle-marker-blue.svg',
+        iconSize: [25, 25],
+        iconAnchor: [12, 12],
+        popupAnchor: [1, 1],
+    })
+   ///////////////////////end of marker creation////////////////////////////////////
+
    // Set the map to the center of Chisinau by default
-   var mymap = L.map('mapid').setView([47.023659, 28.828983], 13);
+   var mymap = L.map('mapid').setView([47.023659, 28.828983], 13)
 
    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
       maxZoom: 18,
@@ -44,18 +67,18 @@
          '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
          'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       id: 'mapbox/streets-v11'
-   }).addTo(mymap);
+   }).addTo(mymap)
 
-   var popup = L.popup();
+   var popup = L.popup()
 
    function onMapClick(e) {
       popup
          .setLatLng(e.latlng)
          .setContent("You clicked the map at " + e.latlng.toString())
-         .openOn(mymap);
+         .openOn(mymap)
    }
 
-   mymap.on('click', onMapClick);
+   mymap.on('click', onMapClick)
 
 
    /* This function is invoked when a marker is rendered. It will either create
@@ -72,11 +95,40 @@
       else {
          // we've never seen it before, create it and add it to the map
          console.log(`Creating marker for board ${boardId}`)
-         var newMarker = L.marker([lat, lon]).addTo(mymap)
-                          .bindPopup(`Board <b>${boardId}</b>`)
+         var newMarker = L.marker([lat, lon], {icon: getVehicleMarkerSize()})
+            .addTo(mymap)
+            .bindPopup(`Board <b>${boardId}</b>`)
          markers.set(boardId, newMarker)
       }
    }
+
+
+   /* Determine the right size of the vehicle marker, depending on the zoom level,
+      the thresholds are taken from https://github.com/roataway/web-ui/issues/85#issuecomment-569459519
+   */
+   function getVehicleMarkerSize() {
+     let currentZoom = mymap.getZoom()
+     console.log("curzum "+ currentZoom)
+
+     if (currentZoom <= 13)
+       return vehicleHighLevel
+     else if (currentZoom <= 15)
+       return vehicleMedLevel
+     return vehicleLowLevel
+   }
+
+   /* This is invoked every time the zoom level is changed. When that happens,
+      we change the marker icon accordingly. Ideally, `setIcon` should only be
+      invoked if the icon really changed; but this is just a proof of concept.
+   */
+   mymap.on('zoomend', function() {
+      let desiredIcon = getVehicleMarkerSize()
+
+     markers.forEach(function(value, key, map){
+      value.setIcon(desiredIcon)
+     })
+     
+   })
 
 </script>
 </body>
