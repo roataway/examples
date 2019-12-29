@@ -16,7 +16,7 @@ MQTT over websockets, și afișează mesajele telemetrice.
 vizualizează vehiculele pe hartă.
 - `python` - conexiune prin MQTT over TCP, cu afișarea pe ecran a mesajelor recepționate.
 - `ios-swift-moscapsule` - exemplu simplu pe iOS cu utilizarea limbajului Swift și librăriei Moscapsule. 
-
+- `ruby` - analog a exemplului Python
 
 
 # Cum să contribui
