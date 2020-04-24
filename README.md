@@ -18,7 +18,8 @@ vizualizează vehiculele pe hartă.
 real a direcției de deplasare a unui vehicul.
 - `python` - conexiune prin MQTT over TCP, cu afișarea pe ecran a mesajelor recepționate.
 - `ios-swift-moscapsule` - exemplu simplu pe iOS cu utilizarea limbajului Swift și librăriei Moscapsule. 
-- `ruby` - analog a exemplului Python
+- `ruby` - analog a exemplului Python.
+- `golang` - conexiune MQTT prin TCP + formarea unei structuri de date din mesajele JSON.
 
 
 # Cum să contribui
