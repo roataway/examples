@@ -20,6 +20,7 @@ real a direcției de deplasare a unui vehicul.
 - `ios-swift-moscapsule` - exemplu simplu pe iOS cu utilizarea limbajului Swift și librăriei Moscapsule. 
 - `ruby` - analog a exemplului Python.
 - `golang` - conexiune MQTT prin TCP + formarea unei structuri de date din mesajele JSON.
+- `elixir` - conexiune MQTT prin TCP + decodarea mesajului JSON intr-o mapa si afisarea lui.
 
 
 # Cum să contribui
