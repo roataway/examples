@@ -3,7 +3,7 @@ defmodule MqttClientHandler do
   MqttClientHandler
   """
   use Tortoise.Handler
-
+  require Logger
   def init(args) do
     {:ok, args}
   end
@@ -15,9 +15,10 @@ defmodule MqttClientHandler do
   @doc """
   Get messages from topic /telemetry/transport/+
   """
-  def handle_message(["telemetry", "transport", _track], payload, state) do
+  def handle_message(["telemetry", "transport", track], payload, state) do
     # decods json to a map
-    _decoded = Jason.decode!(payload)
+    decoded = Jason.decode!(payload)
+    Logger.info("Track #{track} with payload #{inspect(decoded)}")
     {:ok, state}
   end
 
